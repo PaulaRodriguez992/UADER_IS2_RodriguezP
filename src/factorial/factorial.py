@@ -22,17 +22,32 @@ def factorial(num):
 
 # Si no se pasó argumento, se solicita al usuario
 if len(sys.argv) < 2:
-   entrada = input("Ingrese un número o rango (ej. 4-8): ")
+   entrada = input("Ingrese un número o rango (ej. 4-8, -10, 5-): ")
 else:
    entrada = sys.argv[1]
 
-# Verificar si es un rango desde-hasta
-if "-" in entrada:
+# Verificar el tipo de entrada
+if entrada.startswith("-"):
+    # Caso "-hasta": calcular desde 1 hasta el número indicado
+    hasta = int(entrada[1:])
+    for num in range(1, hasta + 1):
+        print("Factorial ", num, "! es ", factorial(num))
+
+elif entrada.endswith("-"):
+    # Caso "desde-": calcular desde el número indicado hasta 60
+    desde = int(entrada[:-1])
+    for num in range(desde, 61):
+        print("Factorial ", num, "! es ", factorial(num))
+
+elif "-" in entrada:
+    # Caso "desde-hasta": calcular entre ambos extremos
     partes = entrada.split("-")
     desde = int(partes[0])
     hasta = int(partes[1])
     for num in range(desde, hasta + 1):
         print("Factorial ", num, "! es ", factorial(num))
+
 else:
+    # Caso número simple
     num = int(entrada)
     print("Factorial ", num, "! es ", factorial(num))
